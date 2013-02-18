@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://martshaw.github.com/martshaw/sitemap.xml 
