@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Martin Shaw Portfolio
 
-## Getting Started
+A modern portfolio site built with Next.js, Tailwind CSS, and shadcn/ui.
 
-First, run the development server:
+## Features
 
-```bash
+- Responsive design
+- Server-side rendering
+- Markdown content
+- Dark mode support
+- Animated hero section
+- Work showcase
+- Experience timeline
+
+## Prerequisites
+
+- Node.js 18.x or later
+- npm or yarn
+
+## Installation
+
+1. Clone the repository:
+
+\`\`\`bash
+git clone https://github.com/yourusername/martin-shaw-portfolio.git
+cd martin-shaw-portfolio
+\`\`\`
+
+2. Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+3. Create the content directory:
+
+\`\`\`bash
+mkdir -p content
+\`\`\`
+
+4. Copy the markdown files to the content directory:
+
+\`\`\`bash
+# Example
+cp path/to/your/markdown/files/* content/
+\`\`\`
+
+## Running the Development Server
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+\`\`\`bash
+npm run build
+\`\`\`
 
-## Learn More
+## Starting the Production Server
 
-To learn more about Next.js, take a look at the following resources:
+\`\`\`bash
+npm run start
+\`\`\`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/`: Next.js App Router files
+- `components/`: React components
+- `content/`: Markdown content files
+- `lib/`: Utility functions
+- `public/`: Static assets
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Edit the markdown files in the `content` directory to update the site content:
+
+- `profile.md`: Personal information
+- `capabilities.md`: Core capabilities
+- `experience.md`: Work experience
+- `work.md`: Project showcase
+
+### Styling
+
+The site uses Tailwind CSS for styling. You can customize the design by editing:
+
+- `tailwind.config.ts`: Tailwind configuration
+- `app/globals.css`: Global styles
+
+## License
+
+MIT
+\`\`\`
+
+## 7. Let's create a .gitignore file:
+
+```text file=".gitignore"
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

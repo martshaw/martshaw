@@ -1,17 +1,62 @@
+---
+technologies:
+  - "HTML"
+  - "CSS"
+  - "JavaScript"
+  - "TypeScript"
+  - "Node.js"
+  - "GraphQL"
+  - "React"
+  - "SQL/Mongo"
+  - "Express"
+  - "Webpack"
+  - "Git"
+  - "UI Design"
+  - "SaaS"
+  - "CMS"
+  - "CDN"
+  - "Headless CMS"
+  - "Serverless"
+  - "Microservices"
+  - "Micro Frontends"
+  - "AWS"
+  - "Azure"
+  - "Docker"
+  - "MACH"
+  - "DXP"
+  - "Cloud Architecture"
+
+skills:
+  - "Strategic Planning"
+  - "Team Leadership"
+  - "Team Building"
+  - "Mentorship"
+  - "Agile Methodologies"
+  - "Project Management"
+  - "Technical Architecture"
+  - "Performance Optimization"
+  - "Scalability"
+  - "Innovation"
+
+interests:
+  - "Exploring emerging technologies"
+  - "Mentoring junior developers"
+  - "Contributing to open-source projects"
+  - "Golf"
+  - "Electronic music"
+  - "Home automation"
+---
+\`\`\`
+
+Let's update the tailwind.config.ts file:
+
+```ts file="tailwind.config.ts"
 import type { Config } from "tailwindcss"
 
 const config = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-    "*.{js,ts,jsx,tsx,mdx}",
-  ],
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}", "*.{js,ts,jsx,tsx,mdx}"],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -74,9 +119,6 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-      },
-      fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
     },
   },
