@@ -59,14 +59,14 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-black uppercase">Selected Work</h2>
           <div className="flex space-x-4 items-center">
-            <Button
+            {/* <Button
               variant="outline"
               size="sm"
               onClick={() => setViewMode(viewMode === "grid" ? "cards" : "grid")}
               className="text-black border-black hover:bg-black/5"
             >
               {viewMode === "grid" ? "Card View" : "Grid View"}
-            </Button>
+            </Button> */}
             <Button variant="link" className="text-black p-0 uppercase" onClick={loadMoreWork} disabled={loading}>
               {loading ? (
                 <>
@@ -122,7 +122,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
         )}
 
         {/* Card View */}
-        {viewMode === "cards" && (
+        {/* {viewMode === "cards" && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-500">
             {data.map((item, index) => (
               <div
@@ -154,7 +154,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               </div>
             ))}
           </div>
-        )}
+        )} */}
 
         {/* Mobile View All Button */}
         <div className="mt-8 text-center md:hidden">

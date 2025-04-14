@@ -229,9 +229,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 z-10">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4 text-white">
           Designing and delivering cutting-edge
-          <br className="hidden md:block" />
           solutions within dynamic digital
-          <br className="hidden md:block" />
           environments for Fortune 500 clients.
         </h1>
       </div>
