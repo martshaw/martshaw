@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -115,6 +116,13 @@
   padding-bottom: 60px; /* Add padding to accommodate the footer */
 }
 
+/* Remove padding from the last snap-start section on mobile */
+@media (max-width: 768px) {
+  section.snap-start:last-of-type {
+    padding-bottom: 0;
+  }
+}
+
 /* Optimize animations */
 @layer utilities {
   .transition-gpu {
@@ -186,4 +194,32 @@
   .animate-pulse-custom {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  /* Header navigation styles */
+
+  /* Gradient overlay for header */
+  .nav-gradient {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+    backdrop-filter: blur(8px);
+  }
+
+  /* Shadow effect for header */
+  .nav-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Transition effects for header */
+  .header-transition {
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Active section indicator */
+  .section-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: transform 0.3s ease;
+  }
 }
+

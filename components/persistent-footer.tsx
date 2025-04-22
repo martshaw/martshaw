@@ -12,7 +12,7 @@ const PersistentFooter = () => {
   const today = formatDate(new Date())
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-sm border-t border-white/10 py-4">
+    <footer className="md:fixed relative bottom-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-sm border-t border-white/10 py-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
