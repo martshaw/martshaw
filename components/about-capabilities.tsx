@@ -47,14 +47,7 @@ const AboutCapabilitiesComponent = ({ capabilities, profile }: AboutCapabilities
               <br />
               and services
             </h2>
-            <div className="flex space-x-4">
-              <Button variant="link" className="text-black p-0 uppercase">
-                Index
-              </Button>
-              <Button variant="link" className="text-black p-0 uppercase">
-                Profile
-              </Button>
-            </div>
+  
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">

@@ -1,3 +1,4 @@
+
 import { Suspense } from "react"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
@@ -7,23 +8,22 @@ import { Work } from "@/components/work"
 import { Experience } from "@/components/experience"
 import { Contact } from "@/components/contact"
 import { PersistentFooter } from "@/components/persistent-footer"
-import { getProfileData, getCapabilitiesData, getExperienceData, getWorkData, getMoreWorkData } from "@/lib/data"
+import { StructuredData } from "@/components/structured-data"
+import { getProfileData, getCapabilitiesData, getExperienceData, getAllWorkData } from "@/lib/data"
 import { LoadingSection } from "@/components/loading-section"
 
-export const dynamic = "force-static"
-export const revalidate = 3600 // Revalidate at most every hour
+// Set to force-dynamic to ensure fresh data on each page load
+export const dynamic = "force-dynamic"
+export const revalidate = 0 // Disable cache to ensure randomization on each page load
 
 export default async function Home() {
   // Parallel data fetching for better performance
-  const [profile, capabilities, experience, work] = await Promise.all([
+  const [profile, capabilities, experience, workData] = await Promise.all([
     getProfileData(),
     getCapabilitiesData(),
     getExperienceData(),
-    getWorkData(),
+    getAllWorkData(),
   ])
-
-  // Prefetch more work data to warm up the cache
-  getMoreWorkData()
 
   return (
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll pb-16">
@@ -41,7 +41,7 @@ export default async function Home() {
 
         <Suspense fallback={<LoadingSection />}>
           <section id="work" className="snap-start min-h-screen">
-            <Work data={work} />
+            <Work data={workData} />
           </section>
         </Suspense>
 
@@ -64,6 +64,70 @@ export default async function Home() {
         </Suspense>
       </main>
       <PersistentFooter />
+
+      {/* Structured data for the website */}
+      <StructuredData
+        type="WebSite"
+        data={{
+          name: "Martin Shaw Portfolio",
+          url: "https://martinshaw.com",
+          description:
+            "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
+          author: {
+            "@type": "Person",
+            name: "Martin Shaw",
+            url: "https://martinshaw.com",
+          },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://martinshaw.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
+
+      {/* Structured data for the person */}
+      <StructuredData
+        type="Person"
+        data={{
+          name: "Martin Shaw",
+          jobTitle: "Solutions Architect / Engineer",
+          url: "https://martinshaw.com",
+          sameAs: ["http://linkedin.com/in/martshaw", "https://github.com/martshaw"],
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Edinburgh",
+            addressRegion: "Scotland",
+            addressCountry: "UK",
+          },
+          description:
+            "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
+        }}
+      />
+
+      {/* Structured data for the portfolio */}
+      <StructuredData
+        type="WebPage"
+        data={{
+          "@type": "ProfilePage",
+          name: "Martin Shaw Portfolio",
+          description: "Portfolio of Martin Shaw, Solutions Architect and Engineer",
+          mainEntity: {
+            "@type": "Person",
+            name: "Martin Shaw",
+            jobTitle: "Solutions Architect / Engineer",
+            url: "https://martinshaw.com",
+            sameAs: ["http://linkedin.com/in/martshaw", "https://github.com/martshaw"],
+          },
+          specialty: [
+            "Solutions Architecture",
+            "MACH Architecture",
+            "Digital Experience Platforms",
+            "Frontend Development",
+          ],
+        }}
+      />
     </div>
   )
 }
+

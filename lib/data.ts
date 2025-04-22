@@ -2,6 +2,7 @@ import fs from "fs/promises"
 import path from "path"
 import matter from "gray-matter"
 import { cache } from "react"
+import { shuffleArray } from "./utils"
 
 const contentDirectory = path.join(process.cwd(), "content")
 
@@ -71,14 +72,53 @@ export const getExperienceData = cache(async () => {
   }
 })
 
-export const getWorkData = cache(async () => {
+// Unified function to get all work data from a single source
+export const getAllWorkData = cache(async () => {
   try {
     const filePath = path.join(contentDirectory, "work.md")
-    const fileContents = await fs.readFile(filePath, "utf8")
 
-    const { data } = matter(fileContents)
+    // Try to read from the unified file first
+    try {
+      const fileContents = await fs.readFile(filePath, "utf8")
+      const { data } = matter(fileContents)
 
-    return data.projects.map((project: any, index: number) => ({
+      // Map and return the projects with unique IDs
+      return shuffleArray(
+        data.projects.map((project: any, index: number) => ({
+          id: `project-${index + 1}`,
+          title: project.title,
+          client: project.client,
+          description: project.description,
+          image: project.image,
+          link: project.link,
+        })),
+      )
+    } catch (fileError) {
+      // If the unified file doesn't exist yet, fall back to combining the two separate files
+      console.log("Unified work file not found, falling back to separate files")
+      return await getLegacyWorkData()
+    }
+  } catch (error) {
+    console.error("Error fetching work data:", error)
+    return []
+  }
+})
+
+// Legacy function to combine data from separate files (for backward compatibility)
+const getLegacyWorkData = cache(async () => {
+  try {
+    // Read from both files
+    const mainWorkPath = path.join(contentDirectory, "work.md")
+    const moreWorkPath = path.join(contentDirectory, "more-work.md")
+
+    const mainFileContents = await fs.readFile(mainWorkPath, "utf8")
+    const moreFileContents = await fs.readFile(moreWorkPath, "utf8")
+
+    const mainData = matter(mainFileContents).data
+    const moreData = matter(moreFileContents).data
+
+    // Combine and map projects
+    const mainProjects = mainData.projects.map((project: any, index: number) => ({
       id: `project-${index + 1}`,
       title: project.title,
       client: project.client,
@@ -86,20 +126,8 @@ export const getWorkData = cache(async () => {
       image: project.image,
       link: project.link,
     }))
-  } catch (error) {
-    console.error("Error fetching work data:", error)
-    return []
-  }
-})
 
-export const getMoreWorkData = cache(async () => {
-  try {
-    const filePath = path.join(contentDirectory, "more-work.md")
-    const fileContents = await fs.readFile(filePath, "utf8")
-
-    const { data } = matter(fileContents)
-
-    return data.projects.map((project: any, index: number) => ({
+    const moreProjects = moreData.projects.map((project: any, index: number) => ({
       id: `more-project-${index + 1}`,
       title: project.title,
       client: project.client,
@@ -107,42 +135,16 @@ export const getMoreWorkData = cache(async () => {
       image: project.image,
       link: project.link,
     }))
+
+    // Combine and shuffle
+    return shuffleArray([...mainProjects, ...moreProjects])
   } catch (error) {
-    console.error("Error fetching more work data:", error)
-    // Return fallback data if file doesn't exist yet
-    return [
-      {
-        id: "more-project-1",
-        title: "Digital Transformation",
-        client: "Financial Services Company",
-        description: "Complete digital transformation of legacy systems, improving customer experience by 40%.",
-        image: "/placeholder.svg?height=600&width=800",
-        link: "#",
-      },
-      {
-        id: "more-project-2",
-        title: "Mobile App Development",
-        client: "Retail Brand",
-        description: "Developed a mobile app that increased customer engagement by 35% and sales by 20%.",
-        image: "/placeholder.svg?height=600&width=800",
-        link: "#",
-      },
-      {
-        id: "more-project-3",
-        title: "E-commerce Platform",
-        client: "Fashion Retailer",
-        description: "Built a scalable e-commerce platform handling 10,000+ concurrent users during peak sales.",
-        image: "/placeholder.svg?height=600&width=800",
-        link: "#",
-      },
-      {
-        id: "more-project-4",
-        title: "CMS Implementation",
-        client: "Media Company",
-        description: "Implemented a headless CMS that reduced content publishing time by 60%.",
-        image: "/placeholder.svg?height=600&width=800",
-        link: "#",
-      },
-    ]
+    console.error("Error in legacy work data fetching:", error)
+    return []
   }
 })
+
+// For backward compatibility - will be deprecated
+export const getMainWorkData = getAllWorkData
+export const getMoreWorkData = cache(async () => [])
+export const getWorkData = getAllWorkData
