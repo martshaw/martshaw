@@ -9,7 +9,8 @@ import { Experience } from "@/components/experience"
 import { Contact } from "@/components/contact"
 import { PersistentFooter } from "@/components/persistent-footer"
 import { StructuredData } from "@/components/structured-data"
-import { getProfileData, getCapabilitiesData, getExperienceData, getAllWorkData } from "@/lib/data"
+import { getAllWorkData } from "@/lib/data"
+import { getProfileData, getCapabilitiesData, getExperienceData } from "@/lib/data"
 import { LoadingSection } from "@/components/loading-section"
 
 // Set to force-dynamic to ensure fresh data on each page load
@@ -26,7 +27,7 @@ export default async function Home() {
   ])
 
   return (
-    <div className="snap-y snap-mandatory h-screen overflow-y-scroll pb-16">
+    <div className="snap-y snap-mandatory h-screen overflow-y-scroll md:pb-16">
       <Header />
       <main>
         <section id="home" className="snap-start h-screen">

@@ -25,7 +25,6 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
   // State for the displayed work items
   const [data, setData] = useState<WorkItem[]>([])
   const [loading, setLoading] = useState(false)
-  const [viewMode, setViewMode] = useState<"grid" | "cards">("grid")
   const [selectedCard, setSelectedCard] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showShareMenu, setShowShareMenu] = useState<string | null>(null)
@@ -107,23 +106,15 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               {loading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Shuffle className="h-4 w-4 mr-2" />}
               Shuffle
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setViewMode(viewMode === "grid" ? "cards" : "grid")}
-              className="text-black border-black bg-transparent hover:bg-black/5"
-            >
-              {viewMode === "grid" ? "Card View" : "Grid View"}
-            </Button>
           </div>
         </div>
 
         {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">{error}</div>}
 
-        {/* Grid View */}
-        {viewMode === "grid" && (
+        {/* Mobile: Grid View */}
+        <div className="block md:hidden">
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-500 ${loading ? "opacity-50" : "opacity-100"}`}
+            className={`grid grid-cols-1 sm:grid-cols-2 gap-8 transition-all duration-500 ${loading ? "opacity-50" : "opacity-100"}`}
           >
             {data.map((item, index) => (
               <div
@@ -202,16 +193,16 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               </div>
             ))}
           </div>
-        )}
+        </div>
 
-        {/* Card View */}
-        {viewMode === "cards" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-500">
+        {/* Desktop: Card View */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500">
             {data.map((item, index) => (
               <div
                 key={item.id}
                 className={`relative aspect-[3/4] overflow-hidden rounded-lg cursor-pointer transition-all duration-500 ${
-                  selectedCard === item.id ? "opacity-100 scale-105 z-10" : "opacity-50 scale-100"
+                  selectedCard === item.id ? "opacity-100 scale-105 z-10" : "opacity-70 scale-100"
                 }`}
                 onClick={() => handleCardSelect(item.id)}
                 onMouseEnter={() => handleCardSelect(item.id)}
@@ -286,7 +277,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               </div>
             ))}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Structured Data for Projects */}
