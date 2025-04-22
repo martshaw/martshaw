@@ -1,11 +1,12 @@
 "use client"
 
-import { memo, useState } from "react"
+import { memo, useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
-import { fetchMoreWorkData } from "@/app/actions"
+import { Loader2, Share2, Linkedin, Twitter, Facebook, Link2, Shuffle } from "lucide-react"
+import { shuffleArray } from "@/lib/utils"
+import { StructuredData } from "@/components/structured-data"
 
 interface WorkItem {
   id: string
@@ -21,36 +22,72 @@ interface WorkProps {
 }
 
 const WorkComponent = ({ data: initialData }: WorkProps) => {
-  const [data, setData] = useState<WorkItem[]>(initialData)
+  // State for the displayed work items
+  const [data, setData] = useState<WorkItem[]>([])
   const [loading, setLoading] = useState(false)
-  const [showAll, setShowAll] = useState(false)
   const [viewMode, setViewMode] = useState<"grid" | "cards">("grid")
-  const [selectedCard, setSelectedCard] = useState<string | null>(initialData[0]?.id || null)
+  const [selectedCard, setSelectedCard] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [showShareMenu, setShowShareMenu] = useState<string | null>(null)
 
-  // Load more work examples
-  const loadMoreWork = async () => {
-    if (showAll) {
-      // If already showing all, just toggle back to initial data
-      setData(initialData)
-      setShowAll(false)
-      return
+  // Initialize with shuffled data on component mount
+  useEffect(() => {
+    setData(shuffleArray(initialData))
+    if (initialData.length > 0) {
+      setSelectedCard(initialData[0].id)
     }
+  }, [initialData])
 
+  // Reshuffle the current data
+  const reshuffleData = () => {
     setLoading(true)
-    try {
-      const moreWork = await fetchMoreWorkData()
-      setData([...initialData, ...moreWork])
-      setShowAll(true)
-    } catch (error) {
-      console.error("Error loading more work:", error)
-    } finally {
+
+    // Add a small delay to show the loading state
+    setTimeout(() => {
+      setData((prevData) => shuffleArray([...prevData]))
       setLoading(false)
-    }
+    }, 300)
   }
 
   // Handle card selection
   const handleCardSelect = (id: string) => {
     setSelectedCard(id)
+  }
+
+  // Toggle share menu
+  const toggleShareMenu = (id: string) => {
+    setShowShareMenu(showShareMenu === id ? null : id)
+  }
+
+  // Share project
+  const shareProject = (platform: string, item: WorkItem) => {
+    const projectTitle = `${item.client} - ${item.title} | Martin Shaw Portfolio`
+    const projectUrl = item.link !== "#" ? item.link : "https://martinshaw.com"
+    const description = item.description
+
+    let shareUrl = ""
+
+    switch (platform) {
+      case "linkedin":
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(projectUrl)}&title=${encodeURIComponent(projectTitle)}&summary=${encodeURIComponent(description)}`
+        break
+      case "twitter":
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(projectUrl)}&text=${encodeURIComponent(projectTitle)}`
+        break
+      case "facebook":
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(projectUrl)}&quote=${encodeURIComponent(projectTitle)}`
+        break
+      case "copy":
+        navigator.clipboard.writeText(projectUrl)
+        alert("Link copied to clipboard!")
+        setShowShareMenu(null)
+        return
+      default:
+        return
+    }
+
+    window.open(shareUrl, "_blank", "noopener,noreferrer")
+    setShowShareMenu(null)
   }
 
   return (
@@ -59,28 +96,29 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-black uppercase">Selected Work</h2>
           <div className="flex space-x-4 items-center">
-            {/* <Button
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={reshuffleData}
+              className="text-black border-black bg-transparent hover:bg-black/5"
+              title="Shuffle projects"
+              disabled={loading}
+            >
+              {loading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Shuffle className="h-4 w-4 mr-2" />}
+              Shuffle
+            </Button>
+            <Button
               variant="outline"
               size="sm"
               onClick={() => setViewMode(viewMode === "grid" ? "cards" : "grid")}
-              className="text-black border-black hover:bg-black/5"
+              className="text-black border-black bg-transparent hover:bg-black/5"
             >
               {viewMode === "grid" ? "Card View" : "Grid View"}
-            </Button> */}
-            <Button variant="link" className="text-black p-0 uppercase" onClick={loadMoreWork} disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Loading...
-                </>
-              ) : showAll ? (
-                "Show Less"
-              ) : (
-                "View All"
-              )}
             </Button>
           </div>
         </div>
+
+        {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">{error}</div>}
 
         {/* Grid View */}
         {viewMode === "grid" && (
@@ -91,38 +129,83 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               <div
                 key={item.id}
                 className={`group transition-all duration-500 ease-in-out ${
-                  loading ? "translate-y-4 opacity-0" : `translate-y-0 opacity-100 transition-delay-${index * 100}`
+                  loading ? "translate-y-4 opacity-0" : `translate-y-0 opacity-100`
                 }`}
-                style={{ transitionDelay: loading ? "0ms" : `${index * 100}ms` }}
+                style={{ transitionDelay: loading ? "0ms" : `${Math.min(index * 100, 800)}ms` }}
               >
-                <Link href={item.link} className="block overflow-hidden">
+                <div className="block overflow-hidden">
                   <div className="relative aspect-[4/3] overflow-hidden mb-4 bg-gray-100">
-                    <Image
-                      src={item.image || "/placeholder.svg?height=600&width=800"}
-                      alt={`${item.client} - ${item.title}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      priority={index < 2}
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading={index < 2 ? "eager" : "lazy"}
-                    />
+                    <Link href={item.link}>
+                      <Image
+                        src={item.image || "/placeholder.svg?height=600&width=800"}
+                        alt={`${item.client} - ${item.title} project by Martin Shaw`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority={index < 2}
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading={index < 2 ? "eager" : "lazy"}
+                      />
+                    </Link>
+                    <button
+                      onClick={() => toggleShareMenu(item.id)}
+                      className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-colors z-10"
+                      aria-label="Share this project"
+                    >
+                      <Share2 className="h-4 w-4 text-black" />
+                    </button>
+                    {showShareMenu === item.id && (
+                      <div className="absolute top-14 right-4 bg-white rounded-md shadow-lg p-2 z-20 flex flex-col gap-2">
+                        <button
+                          onClick={() => shareProject("linkedin", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on LinkedIn"
+                        >
+                          <Linkedin className="h-4 w-4" /> <span className="text-sm">LinkedIn</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("twitter", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on Twitter"
+                        >
+                          <Twitter className="h-4 w-4" /> <span className="text-sm">Twitter</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("facebook", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on Facebook"
+                        >
+                          <Facebook className="h-4 w-4" /> <span className="text-sm">Facebook</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("copy", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Copy link"
+                        >
+                          <Link2 className="h-4 w-4" /> <span className="text-sm">Copy Link</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-xl font-bold mb-1">{item.title}</h3>
+                      <h3 className="text-xl font-bold mb-1">
+                        <Link href={item.link} className="hover:underline">
+                          {item.title}
+                        </Link>
+                      </h3>
                       <p className="text-sm text-gray-600 mb-2">{item.client}</p>
                       <p className="text-sm">{item.description}</p>
                     </div>
                     <span className="text-sm font-medium">{String(index + 1).padStart(2, "0")}</span>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>
         )}
 
         {/* Card View */}
-        {/* {viewMode === "cards" && (
+        {viewMode === "cards" && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-500">
             {data.map((item, index) => (
               <div
@@ -135,7 +218,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
               >
                 <Image
                   src={item.image || "/placeholder.svg?height=600&width=800"}
-                  alt={`${item.client} - ${item.title}`}
+                  alt={`${item.client} - ${item.title} project by Martin Shaw`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-cover transition-transform duration-500"
@@ -144,39 +227,91 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
                   <h3 className="text-lg font-bold">{item.title}</h3>
                   <p className="text-sm text-gray-300">{item.client}</p>
                   <p className="text-xs mt-2 line-clamp-3">{item.description}</p>
-                  <Link
-                    href={item.link}
-                    className="mt-3 text-xs font-medium bg-white text-black px-3 py-1 rounded inline-block hover:bg-gray-200 transition-colors"
-                  >
-                    View Project
-                  </Link>
+                  <div className="mt-3 flex justify-between items-center">
+                    <Link
+                      href={item.link}
+                      className="text-xs font-medium bg-white text-black px-3 py-1 rounded inline-block hover:bg-gray-200 transition-colors"
+                    >
+                      View Project
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        toggleShareMenu(item.id)
+                      }}
+                      className="bg-white/20 backdrop-blur-sm p-2 rounded-full hover:bg-white/30 transition-colors"
+                      aria-label="Share this project"
+                    >
+                      <Share2 className="h-3 w-3 text-white" />
+                    </button>
+                    {showShareMenu === item.id && (
+                      <div
+                        className="absolute top-4 right-4 bg-white rounded-md shadow-lg p-2 z-20 flex flex-col gap-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          onClick={() => shareProject("linkedin", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on LinkedIn"
+                        >
+                          <Linkedin className="h-4 w-4 text-black" />{" "}
+                          <span className="text-sm text-black">LinkedIn</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("twitter", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on Twitter"
+                        >
+                          <Twitter className="h-4 w-4 text-black" /> <span className="text-sm text-black">Twitter</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("facebook", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Share on Facebook"
+                        >
+                          <Facebook className="h-4 w-4 text-black" />{" "}
+                          <span className="text-sm text-black">Facebook</span>
+                        </button>
+                        <button
+                          onClick={() => shareProject("copy", item)}
+                          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                          aria-label="Copy link"
+                        >
+                          <Link2 className="h-4 w-4 text-black" /> <span className="text-sm text-black">Copy Link</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-        )} */}
-
-        {/* Mobile View All Button */}
-        <div className="mt-8 text-center md:hidden">
-          <Button
-            variant="outline"
-            className="text-black border-black hover:bg-black/5 uppercase"
-            onClick={loadMoreWork}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading...
-              </>
-            ) : showAll ? (
-              "Show Less"
-            ) : (
-              "View All"
-            )}
-          </Button>
-        </div>
+        )}
       </div>
+
+      {/* Structured Data for Projects */}
+      {data.map((project) => (
+        <StructuredData
+          key={project.id}
+          type="Project"
+          data={{
+            name: `${project.client} - ${project.title}`,
+            description: project.description,
+            url: project.link,
+            image: project.image,
+            creator: {
+              "@type": "Person",
+              name: "Martin Shaw",
+              url: "https://martinshaw.com",
+            },
+            datePublished: new Date().toISOString().split("T")[0], // Current date in YYYY-MM-DD format
+            provider: {
+              "@type": "Organization",
+              name: project.client,
+            },
+          }}
+        />
+      ))}
     </section>
   )
 }

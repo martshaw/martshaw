@@ -1,6 +1,8 @@
+
 import { memo } from "react"
 import Link from "next/link"
 import { formatDateRange } from "@/lib/utils"
+import { StructuredData } from "@/components/structured-data"
 
 interface Experience {
   id: string
@@ -68,6 +70,21 @@ const ExperienceComponent = ({ data }: ExperienceProps) => {
                     </ul>
                   </div>
                 </div>
+
+                {/* Structured data for each job */}
+                <StructuredData
+                  type="Organization"
+                  data={{
+                    name: job.company,
+                    url: job.website || null,
+                    employee: {
+                      "@type": "Person",
+                      name: "Martin Shaw",
+                      jobTitle: job.position,
+                      description: job.description.join(" "),
+                    },
+                  }}
+                />
               </div>
             )
           })}
@@ -79,3 +96,4 @@ const ExperienceComponent = ({ data }: ExperienceProps) => {
 
 // Memoize the component to prevent unnecessary re-renders
 export const Experience = memo(ExperienceComponent)
+
