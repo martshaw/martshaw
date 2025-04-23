@@ -12,7 +12,7 @@ const ContactComponent = () => {
           </p>
           <div className="mt-8">
             <Link
-              href="mailto:info@martinshaw.com"
+              href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)"
               className="inline-block bg-white text-black px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-colors uppercase"
             >
               info@martinshaw.com

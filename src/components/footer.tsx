@@ -13,7 +13,7 @@ export function Footer() {
           </p>
           <div className="mt-8">
             <Link
-              href="mailto:info@martinshaw.com"
+              href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)"
               className="inline-block bg-white text-black px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-colors"
             >
               info@martinshaw.com
@@ -25,7 +25,7 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-medium mb-4">Contact</h3>
             <p className="text-sm text-gray-400">
-              <Link href="mailto:info@martinshaw.com" className="hover:text-white transition-colors">
+              <Link href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)" className="hover:text-white transition-colors">
                 info@martinshaw.com
               </Link>
             </p>
