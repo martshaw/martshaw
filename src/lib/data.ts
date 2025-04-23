@@ -113,14 +113,9 @@ const getLegacyWorkData = async () => {
   try {
     // Read from both files
     const mainWorkPath = path.join(contentDirectory, "work.md")
-    const moreWorkPath = path.join(contentDirectory, "more-work.md")
-
     const mainFileContents = await fs.readFile(mainWorkPath, "utf8")
-    const moreFileContents = await fs.readFile(moreWorkPath, "utf8")
 
     const mainData = matter(mainFileContents).data
-    const moreData = matter(moreFileContents).data
-
     // Combine and map projects
     const mainProjects = mainData.projects.map((project: any, index: number) => ({
       id: `project-${index + 1}`,
@@ -130,18 +125,8 @@ const getLegacyWorkData = async () => {
       image: project.image,
       link: project.link,
     }))
-
-    const moreProjects = moreData.projects.map((project: any, index: number) => ({
-      id: `more-project-${index + 1}`,
-      title: project.title,
-      client: project.client,
-      description: project.description,
-      image: project.image,
-      link: project.link,
-    }))
-
     // Combine and shuffle
-    return shuffleArray([...mainProjects, ...moreProjects])
+    return shuffleArray([...mainProjects])
   } catch (error) {
     console.error("Error in legacy work data fetching:", error)
     return []
