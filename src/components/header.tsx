@@ -148,37 +148,37 @@ const Header = () => {
           {/* Hide Welcome and About on mobile */}
           <button
             onClick={() => scrollToSection("home")}
-            className={`hidden md:block text-sm transition-colors uppercase ${getLinkStyle("home")}`}
+            className={`hidden md:block text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("home")}`}
           >
             Welcome
           </button>
           <button
             onClick={() => scrollToSection("profile")}
-            className={`text-sm transition-colors uppercase ${getLinkStyle("profile")}`}
+            className={`text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("profile")}`}
           >
             Profile
           </button>
           <button
             onClick={() => scrollToSection("work")}
-            className={`text-sm transition-colors uppercase ${getLinkStyle("work")}`}
+            className={`text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("work")}`}
           >
             Work
           </button>
           <button
             onClick={() => scrollToSection("about")}
-            className={`hidden md:block text-sm transition-colors uppercase ${getLinkStyle("about")}`}
+            className={`hidden md:block text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("about")}`}
           >
             About
           </button>
           <button
             onClick={() => scrollToSection("experience")}
-            className={`text-sm transition-colors uppercase ${getLinkStyle("experience")}`}
+            className={`text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("experience")}`}
           >
             Exp
           </button>
           <button
             onClick={() => scrollToSection("contact")}
-            className={`text-sm transition-colors uppercase ${getLinkStyle("contact")}`}
+            className={`text-sm transition-colors uppercase cursor-pointer ${getLinkStyle("contact")}`}
           >
             Contact
           </button>
