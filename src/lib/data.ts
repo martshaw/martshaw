@@ -1,13 +1,17 @@
 import fs from "fs/promises"
 import path from "path"
 import matter from "gray-matter"
-import { cache } from "react"
 import { shuffleArray } from "./utils"
 
 const contentDirectory = path.join(process.cwd(), "content")
 
+// Add this function at the top of the file
+async function fetchWithCache(url: string) {
+  return fetch(url, { cache: "force-cache" })
+}
+
 // Use React's cache to prevent redundant data fetching
-export const getProfileData = cache(async () => {
+export const getProfileData = async () => {
   try {
     const filePath = path.join(contentDirectory, "profile.md")
     const fileContents = await fs.readFile(filePath, "utf8")
@@ -31,9 +35,9 @@ export const getProfileData = cache(async () => {
       summary: "A forward-thinking technologist with a focus on designing and delivering cutting-edge solutions.",
     }
   }
-})
+}
 
-export const getCapabilitiesData = cache(async () => {
+export const getCapabilitiesData = async () => {
   try {
     const filePath = path.join(contentDirectory, "capabilities.md")
     const fileContents = await fs.readFile(filePath, "utf8")
@@ -49,9 +53,9 @@ export const getCapabilitiesData = cache(async () => {
     console.error("Error fetching capabilities data:", error)
     return []
   }
-})
+}
 
-export const getExperienceData = cache(async () => {
+export const getExperienceData = async () => {
   try {
     const filePath = path.join(contentDirectory, "experience.md")
     const fileContents = await fs.readFile(filePath, "utf8")
@@ -70,12 +74,12 @@ export const getExperienceData = cache(async () => {
     console.error("Error fetching experience data:", error)
     return []
   }
-})
+}
 
 // Unified function to get all work data from a single source
-export const getAllWorkData = cache(async () => {
+export const getAllWorkData = async () => {
   try {
-    const filePath = path.join(contentDirectory, "work.md")
+    const filePath = path.join(contentDirectory, "all-work.md")
 
     // Try to read from the unified file first
     try {
@@ -102,10 +106,10 @@ export const getAllWorkData = cache(async () => {
     console.error("Error fetching work data:", error)
     return []
   }
-})
+}
 
 // Legacy function to combine data from separate files (for backward compatibility)
-const getLegacyWorkData = cache(async () => {
+const getLegacyWorkData = async () => {
   try {
     // Read from both files
     const mainWorkPath = path.join(contentDirectory, "work.md")
@@ -142,9 +146,9 @@ const getLegacyWorkData = cache(async () => {
     console.error("Error in legacy work data fetching:", error)
     return []
   }
-})
+}
 
 // For backward compatibility - will be deprecated
 export const getMainWorkData = getAllWorkData
-export const getMoreWorkData = cache(async () => [])
+export const getMoreWorkData = async () => []
 export const getWorkData = getAllWorkData

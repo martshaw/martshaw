@@ -37,6 +37,8 @@ export const metadata: Metadata = {
     "Frontend Development",
   ],
   authors: [{ name: "Martin Shaw", url: siteUrl }],
+  creator: "Martin Shaw",
+  publisher: "Martin Shaw",
   formatDetection: {
     email: true,
     address: true,
@@ -67,7 +69,7 @@ export const metadata: Metadata = {
     siteName: "Martin Shaw Portfolio",
     title: "Martin Shaw | Solutions Architect",
     description:
-      "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients based in the UK.",
+      "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -82,22 +84,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Martin Shaw | Solutions Architect",
     description:
-      "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients based in the UK.",
+      "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
     images: [`${siteUrl}/twitter-image.png`],
     creator: "@martinshaw",
-  },
-  // Verification for search engines
-  verification: {
-    google: "google-site-verification-code", // Replace with actual verification code
-    yandex: "yandex-verification-code", // Replace with actual verification code
   },
   category: "technology",
   applicationName: "Martin Shaw Portfolio",
   referrer: "origin-when-cross-origin",
   generator: "Next.js",
-  colorScheme: "dark light",
-  creator: "Martin Shaw",
-  publisher: "Martin Shaw",
   archives: [`${siteUrl}/archive`],
   bookmarks: [`${siteUrl}/bookmarks`],
   assets: [`${siteUrl}/assets`],
@@ -125,10 +119,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* Favicon set */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192X192" href="/web-app-manifest-192x192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/web-app-manifest-512x512.png" />
+        <link rel="icon" href="/thinking-emoji.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/thinking-emoji-180.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/thinking-emoji-32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/thinking-emoji-16.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
       </head>

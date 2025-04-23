@@ -1,13 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next"
-import { getAllWorkData } from "../lib/data"
+import { type NextRequest, NextResponse } from "next/server"
+import { getAllWorkData } from "@/lib/data"
 
-const SITE_URL = "https://martinshaw.com"
+export const runtime = "edge"
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Set the appropriate content type
-  res.setHeader("Content-Type", "text/xml")
-
-  // Get the current date in ISO format (YYYY-MM-DD)
+export async function GET(request: NextRequest) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://martinshaw.com"
   const date = new Date().toISOString().split("T")[0]
 
   // Define the main pages/sections
@@ -32,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Add static pages to the sitemap
   staticPages.forEach((page) => {
     sitemap += `  <url>
-    <loc>${SITE_URL}${page.url}</loc>
+    <loc>${baseUrl}${page.url}</loc>
     <lastmod>${date}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
@@ -48,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // If you have individual project pages, you could add them like this:
     // workData.forEach((project) => {
     //   sitemap += `  <url>
-    //     <loc>${SITE_URL}/work/${project.id}</loc>
+    //     <loc>${baseUrl}/work/${project.id}</loc>
     //     <lastmod>${date}</lastmod>
     //     <changefreq>monthly</changefreq>
     //     <priority>0.6</priority>
@@ -62,6 +59,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Close the sitemap XML
   sitemap += `</urlset>`
 
-  // Send the sitemap as the response
-  res.status(200).send(sitemap)
+  // Return the sitemap with the appropriate content type
+  return new NextResponse(sitemap, {
+    headers: {
+      "Content-Type": "application/xml",
+    },
+  })
 }

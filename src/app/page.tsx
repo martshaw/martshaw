@@ -14,9 +14,19 @@ import { LoadingSection } from "@/components/loading-section"
 
 // Set to force-dynamic to ensure fresh data on each page load
 export const dynamic = "force-dynamic"
-export const revalidate = 0 // Disable cache to ensure randomization on each page load
+export const fetchCache = "default-cache" // New in Next.js 15 to enable caching
 
-export default async function Home() {
+export default async function Home({
+  params,
+  searchParams,
+}: {
+  params: Promise<Record<string, string>>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  // Resolve params and searchParams (Next.js 15 change)
+  await params
+  await searchParams
+
   // Parallel data fetching for better performance
   const [profile, capabilities, experience, workData] = await Promise.all([
     getProfileData(),
@@ -111,7 +121,7 @@ export default async function Home() {
         data={{
           "@type": "ProfilePage",
           name: "Martin Shaw Portfolio",
-          description: "Portfolio of Martin Shaw, Solutions Architect and Engineer based in Edinburgh",
+          description: "Portfolio of Martin Shaw, Solutions Architect and Engineer",
           mainEntity: {
             "@type": "Person",
             name: "Martin Shaw",
