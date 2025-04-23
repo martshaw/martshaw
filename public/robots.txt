@@ -1,0 +1,17 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /.next/
+Disallow: /api/
+Disallow: /_next/static/
+Disallow: /_vercel/
+Disallow: /node_modules/
+
+# Host
+Host: https://martinshaw.com
+
+# Sitemaps
+Sitemap: https://martinshaw.com/sitemap.xml
