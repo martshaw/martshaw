@@ -195,7 +195,7 @@ const Header = () => {
             )}
             asChild
           >
-            <a href="mailto:info@martinshaw.com"><span className="mr-1">👋</span> Say Hello</a>
+            <a href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)"><span className="mr-1">👋</span> Say Hello</a>
           </Button>
         </nav>
       </div>

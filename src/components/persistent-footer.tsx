@@ -24,7 +24,7 @@ const PersistentFooter = () => {
           <div className="flex flex-col md:flex-row md:space-x-8 items-center">
             <div className="mb-2 md:mb-0">
               <Link
-                href="mailto:info@martinshaw.com"
+                href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)"
                 className="text-sm hover:text-white transition-colors flex items-center"
                 aria-label="Email Martin Shaw"
               >
