@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -74,15 +73,11 @@
 
   html {
     scroll-behavior: smooth;
-    height: 100%;
-    overflow: hidden;
   }
 
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    height: 100%;
-    overflow: hidden;
   }
 
   /* Capitalize all headings */
@@ -103,22 +98,14 @@
   }
 }
 
-/* Scroll snap styles */
-.snap-y {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-  scroll-behavior: smooth;
-}
-
-.snap-start {
-  scroll-snap-align: start;
+/* Section styling */
+section {
   padding-bottom: 60px; /* Add padding to accommodate the footer */
 }
 
-/* Remove padding from the last snap-start section on mobile */
+/* Remove padding from the last section on mobile */
 @media (max-width: 768px) {
-  section.snap-start:last-of-type {
+  section:last-of-type {
     padding-bottom: 0;
   }
 }
@@ -222,4 +209,3 @@
     transition: transform 0.3s ease;
   }
 }
-

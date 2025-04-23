@@ -1,4 +1,3 @@
-
 import { Suspense } from "react"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
@@ -27,39 +26,39 @@ export default async function Home() {
   ])
 
   return (
-    <div className="snap-y snap-mandatory h-screen overflow-y-scroll md:pb-16">
+    <div>
       <Header />
       <main>
-        <section id="home" className="snap-start h-screen">
+        <section id="home" className="min-h-screen">
           <Hero />
         </section>
 
         <Suspense fallback={<LoadingSection />}>
-          <section id="profile" className="snap-start min-h-screen">
+          <section id="profile" className="min-h-screen">
             <Profile data={profile} />
           </section>
         </Suspense>
 
         <Suspense fallback={<LoadingSection />}>
-          <section id="work" className="snap-start min-h-screen">
+          <section id="work" className="min-h-screen">
             <Work data={workData} />
           </section>
         </Suspense>
 
         <Suspense fallback={<LoadingSection />}>
-          <section id="about" className="snap-start min-h-screen">
+          <section id="about" className="min-h-screen">
             <AboutCapabilities capabilities={capabilities} profile={{ summary: profile.summary }} />
           </section>
         </Suspense>
 
         <Suspense fallback={<LoadingSection />}>
-          <section id="experience" className="snap-start min-h-screen">
+          <section id="experience" className="min-h-screen">
             <Experience data={experience} />
           </section>
         </Suspense>
 
         <Suspense fallback={<LoadingSection />}>
-          <section id="contact" className="snap-start min-h-screen">
+          <section id="contact" className="min-h-screen">
             <Contact />
           </section>
         </Suspense>
@@ -112,7 +111,7 @@ export default async function Home() {
         data={{
           "@type": "ProfilePage",
           name: "Martin Shaw Portfolio",
-          description: "Portfolio of Martin Shaw, Solutions Architect and Engineer",
+          description: "Portfolio of Martin Shaw, Solutions Architect and Engineer based in Edinburgh",
           mainEntity: {
             "@type": "Person",
             name: "Martin Shaw",
@@ -131,4 +130,3 @@ export default async function Home() {
     </div>
   )
 }
-

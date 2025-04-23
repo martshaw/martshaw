@@ -29,13 +29,11 @@ const AboutCapabilitiesComponent = ({ capabilities, profile }: AboutCapabilities
           </div>
           <div className="flex items-end">
             <h2 className="text-3xl md:text-4xl font-bold text-black uppercase">
-              I architect digital solutions and transform
+              I create digital solutions and
               <br />
-              
-              enterprise businesses into,
+              transform enterprise businesses into,
               <br />
               modern future first organisations
-            
             </h2>
           </div>
         </div>
