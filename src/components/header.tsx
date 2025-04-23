@@ -140,7 +140,7 @@ const Header = () => {
               navStyle === "dynamic" && ["work", "about"].includes(activeSection) ? "text-black" : "text-white",
             )}
           >
-            martinshaw
+            martin shaw
           </button>
         </div>
 
