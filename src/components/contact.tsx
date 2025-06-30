@@ -23,8 +23,8 @@ const ContactComponent = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-sm font-medium mb-4 uppercase">Location</h3>
-            <p className="text-sm text-gray-400 uppercase">EDINBURGH, UK</p>
-            <p className="text-sm text-gray-400">55.9533° N, 3.1883° W</p>
+            <p className="text-sm text-gray-400 uppercase">London / Edinburgh, UK</p>
+            <p className="text-sm text-gray-400">51.5099° N, 0.1181° W / 55.9533° N, 3.1883° W</p>
           </div>
           <div>
             <h3 className="text-sm font-medium mb-4 uppercase">Availability</h3>

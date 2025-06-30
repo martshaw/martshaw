@@ -1,10 +1,12 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
+
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Script from "next/script"
 
+export const experimental_ppr = true;
 // Optimize font loading
 const inter = Inter({
   subsets: ["latin"],
