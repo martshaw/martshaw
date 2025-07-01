@@ -53,8 +53,8 @@ export function Footer() {
           </div>
           <div>
             <h3 className="text-sm font-medium mb-4">Location</h3>
-                        <p className="text-sm text-gray-400">London / Edinburgh, UK</p>
-            <p className="text-sm text-gray-400">51.5099° N, 0.1181° W / 55.9533° N, 3.1883° W</p>
+                        <p className="text-sm text-gray-400">UK</p>
+            <p className="text-sm text-gray-400">55.3781° N, 3.4360° W</p>
           </div>
         </div>
         <div className="text-xs text-gray-500">© {currentYear} Martin Shaw. All rights reserved.</div>

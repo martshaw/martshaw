@@ -40,8 +40,8 @@ const ProfileComponent = ({ data }: ProfileProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
           <div>
             <p className="text-gray-300 mb-1 uppercase">Location</p>
-            <p className="uppercase">London / Edinburgh, UK</p>
-            <p className="text-sm text-gray-400">51.5099° N, 0.1181° W / 55.9533° N, 3.1883° W</p>
+            <p className="uppercase">UK</p>
+            <p className="text-sm text-gray-400">55.3781° N, 3.4360° W</p>
           </div>
           <div>
             <p className="text-gray-300 mb-1 uppercase">Specialisation</p>
