@@ -28,7 +28,7 @@ const ContactComponent = () => {
           </div>
           <div>
             <h3 className="text-sm font-medium mb-4 uppercase">Availability</h3>
-            <p className="text-sm text-gray-400">Open to new opportunities</p>
+            <p className="text-sm text-gray-400">Please reach out to discuss existing and interesting opportunies.</p>
           </div>
           <div>
             <h3 className="text-sm font-medium mb-4 uppercase">Expertise</h3>
