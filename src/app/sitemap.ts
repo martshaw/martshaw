@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next"
-import { getAllWorkData } from "@/lib/data"
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://martinshaw.com"
 
   // Define static routes
@@ -43,23 +42,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
   ]
-
-  // Add dynamic routes if you have any
-  try {
-    const workData = await getAllWorkData()
-
-    // If you have individual project pages, you could add them like this:
-    // const workRoutes = workData.map((project) => ({
-    //   url: `${baseUrl}/work/${project.id}`,
-    //   lastModified: new Date(),
-    //   changeFrequency: 'monthly' as const,
-    //   priority: 0.6,
-    // }))
-
-    // return [...routes, ...workRoutes]
-  } catch (error) {
-    console.error("Error fetching work data:", error)
-  }
 
   return routes
 }

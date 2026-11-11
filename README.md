@@ -1,134 +1,39 @@
-# Martin Shaw Portfolio
+# martshaw.com
 
-A modern portfolio site built with Next.js, Tailwind CSS, and shadcn/ui.
+Source for [www.martshaw.com](https://www.martshaw.com), a one-page portfolio built with Next.js 15 (App Router) and Tailwind CSS. It deploys on Vercel.
 
-## Features
+## Requirements
 
-- Responsive design
-- Server-side rendering
-- Markdown content
-- Dark mode support
-- Animated hero section
-- Work showcase
-- Experience timeline
+- Node.js 22
+- pnpm (the version is pinned in `package.json` under `packageManager`; run `corepack enable` to use it)
 
-## Prerequisites
+## Commands
 
-- Node.js 18.x or later
-- npm or yarn
+```bash
+pnpm install       # install dependencies
+pnpm dev           # dev server on http://localhost:3000
+pnpm lint          # ESLint
+pnpm build         # production build, including the type check
+pnpm start         # serve the production build
+```
 
-## Installation
+CI should run `pnpm install --frozen-lockfile`, `pnpm lint` and `pnpm build` on every pull request and on pushes to `main`.
 
-1. Clone the repository:
+## Content
 
-\`\`\`bash
-git clone https://github.com/yourusername/martin-shaw-portfolio.git
-cd martin-shaw-portfolio
-\`\`\`
+Copy lives in Markdown front-matter under `content/`, read by `src/lib/data.ts`:
 
-2. Install dependencies:
+- `profile.md`: name, title, location, email and summary
+- `capabilities.md`: core capabilities
+- `experience.md`: career history
+- `work.md`: projects shown in the work section
 
-\`\`\`bash
-npm install
-\`\`\`
+Images for projects go in `public/`.
 
-3. Create the content directory:
+## Layout
 
-\`\`\`bash
-mkdir -p content
-\`\`\`
-
-4. Copy the markdown files to the content directory:
-
-\`\`\`bash
-# Example
-cp path/to/your/markdown/files/* content/
-\`\`\`
-
-## Running the Development Server
-
-\`\`\`bash
-npm run dev
-\`\`\`
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Building for Production
-
-\`\`\`bash
-npm run build
-\`\`\`
-
-## Starting the Production Server
-
-\`\`\`bash
-npm run start
-\`\`\`
-
-## Project Structure
-
-- `app/`: Next.js App Router files
-- `components/`: React components
-- `content/`: Markdown content files
-- `lib/`: Utility functions
-- `public/`: Static assets
-
-## Customization
-
-### Content
-
-Edit the markdown files in the `content` directory to update the site content:
-
-- `profile.md`: Personal information
-- `capabilities.md`: Core capabilities
-- `experience.md`: Work experience
-- `work.md`: Project showcase
-
-### Styling
-
-The site uses Tailwind CSS for styling. You can customize the design by editing:
-
-- `tailwind.config.ts`: Tailwind configuration
-- `app/globals.css`: Global styles
-
-## License
-
-MIT
-\`\`\`
-
-## 7. Let's create a .gitignore file:
-
-```text file=".gitignore"
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+- `src/app/`: App Router pages, layout, metadata routes and global CSS
+- `src/components/`: React components (`ui/` holds shadcn/ui primitives)
+- `src/lib/`: content loading and helpers
+- `content/`: Markdown content
+- `public/`: static assets

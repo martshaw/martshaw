@@ -3,10 +3,8 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import Script from "next/script"
 
-export const experimental_ppr = true;
 // Optimize font loading
 const inter = Inter({
   subsets: ["latin"],
@@ -114,7 +112,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en-GB" suppressHydrationWarning className={inter.variable}>
+    <html lang="en-GB" className={inter.variable}>
       <head>
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -129,9 +127,7 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
       </head>
       <body className="antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        {children}
 
         {/* Structured data for rich results */}
         <Script

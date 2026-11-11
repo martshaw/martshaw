@@ -3,7 +3,7 @@ import Script from "next/script"
 
 interface StructuredDataProps {
   type: "Person" | "WebSite" | "WebPage" | "Project" | "Organization" | "Article" | "BreadcrumbList" | string
-  data: Record<string, any>
+  data: Record<string, unknown>
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
