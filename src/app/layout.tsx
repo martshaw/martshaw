@@ -5,6 +5,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Script from "next/script"
+import { PERSON_ID, SITE_URL } from "@/lib/site"
 
 export const experimental_ppr = true;
 // Optimize font loading
@@ -15,11 +16,9 @@ const inter = Inter({
   preload: true,
 })
 
-// Define site URL for canonical links and social sharing
-const siteUrl = "https://martinshaw.com"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Martin Shaw | Solutions Architect",
     template: "%s | Martin Shaw",
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
     "Enterprise Solutions",
     "Frontend Development",
   ],
-  authors: [{ name: "Martin Shaw", url: siteUrl }],
+  authors: [{ name: "Martin Shaw", url: SITE_URL }],
   creator: "Martin Shaw",
   publisher: "Martin Shaw",
   formatDetection: {
@@ -67,14 +66,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: siteUrl,
+    url: SITE_URL,
     siteName: "Martin Shaw Portfolio",
     title: "Martin Shaw | Solutions Architect",
     description:
       "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Martin Shaw - Solutions Architect",
@@ -87,16 +86,12 @@ export const metadata: Metadata = {
     title: "Martin Shaw | Solutions Architect",
     description:
       "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
-    images: [`${siteUrl}/twitter-image.png`],
-    creator: "@martinshaw",
+    images: [`${SITE_URL}/twitter-image.png`],
   },
   category: "technology",
   applicationName: "Martin Shaw Portfolio",
   referrer: "origin-when-cross-origin",
   generator: "Next.js",
-  archives: [`${siteUrl}/archive`],
-  bookmarks: [`${siteUrl}/bookmarks`],
-  assets: [`${siteUrl}/assets`],
 }
 
 export const viewport: Viewport = {
@@ -141,9 +136,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
+              "@id": PERSON_ID,
               name: "Martin Shaw",
               jobTitle: "Solutions Architect / Engineer",
-              url: siteUrl,
+              url: SITE_URL,
               sameAs: ["http://linkedin.com/in/martshaw", "https://github.com/martshaw"],
               address: {
                 "@type": "PostalAddress",

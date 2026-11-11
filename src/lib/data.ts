@@ -2,6 +2,7 @@ import fs from "fs/promises"
 import path from "path"
 import matter from "gray-matter"
 import { shuffleArray } from "./utils"
+import { CONTACT_EMAIL } from "./site"
 
 const contentDirectory = path.join(process.cwd(), "content")
 
@@ -31,7 +32,7 @@ export const getProfileData = async () => {
       name: "Martin Shaw",
       title: "Solutions Architect / Engineer",
       location: "EDINBURGH, UK",
-      email: "info@martinshaw.com",
+      email: CONTACT_EMAIL,
       summary: "A forward-thinking technologist with a focus on designing and delivering cutting-edge solutions.",
     }
   }

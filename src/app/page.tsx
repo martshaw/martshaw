@@ -11,6 +11,7 @@ import { StructuredData } from "@/components/structured-data"
 import { getAllWorkData } from "@/lib/data"
 import { getProfileData, getCapabilitiesData, getExperienceData } from "@/lib/data"
 import { LoadingSection } from "@/components/loading-section"
+import { PERSON_ID, SITE_URL } from "@/lib/site"
 
 // Set to force-dynamic to ensure fresh data on each page load
 export const dynamic = "force-dynamic"
@@ -75,60 +76,24 @@ export default async function Home({
       </main>
       <PersistentFooter />
 
-      {/* Structured data for the website */}
       <StructuredData
         type="WebSite"
         data={{
           name: "Martin Shaw Portfolio",
-          url: "https://martinshaw.com",
+          url: SITE_URL,
           description:
             "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
-          author: {
-            "@type": "Person",
-            name: "Martin Shaw",
-            url: "https://martinshaw.com",
-          },
-          potentialAction: {
-            "@type": "SearchAction",
-            target: "https://martinshaw.com/search?q={search_term_string}",
-            "query-input": "required name=search_term_string",
-          },
+          author: { "@id": PERSON_ID },
         }}
       />
 
-      {/* Structured data for the person */}
-      <StructuredData
-        type="Person"
-        data={{
-          name: "Martin Shaw",
-          jobTitle: "Solutions Architect / Engineer",
-          url: "https://martinshaw.com",
-          sameAs: ["http://linkedin.com/in/martshaw", "https://github.com/martshaw"],
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Edinburgh",
-            addressRegion: "Scotland",
-            addressCountry: "UK",
-          },
-          description:
-            "Solutions Architect and Engineer specialising in MACH architecture and digital solutions for Fortune 500 clients.",
-        }}
-      />
-
-      {/* Structured data for the portfolio */}
       <StructuredData
         type="WebPage"
         data={{
           "@type": "ProfilePage",
           name: "Martin Shaw Portfolio",
           description: "Portfolio of Martin Shaw, Solutions Architect and Engineer",
-          mainEntity: {
-            "@type": "Person",
-            name: "Martin Shaw",
-            jobTitle: "Solutions Architect / Engineer",
-            url: "https://martinshaw.com",
-            sameAs: ["http://linkedin.com/in/martshaw", "https://github.com/martshaw"],
-          },
+          mainEntity: { "@id": PERSON_ID },
           specialty: [
             "Solutions Architecture",
             "MACH Architecture",
