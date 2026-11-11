@@ -17,8 +17,6 @@ pnpm build         # production build, including the type check
 pnpm start         # serve the production build
 ```
 
-CI should run `pnpm install --frozen-lockfile`, `pnpm lint` and `pnpm build` on every pull request and on pushes to `main`.
-
 ## Content
 
 Copy lives in Markdown front-matter under `content/`, read by `src/lib/data.ts`:
