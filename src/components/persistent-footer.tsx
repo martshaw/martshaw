@@ -2,7 +2,8 @@
 
 import { memo } from "react"
 import Link from "next/link"
-import { Linkedin, Github, Mail } from "lucide-react"
+import { Mail } from "lucide-react"
+import { Linkedin, Github } from "@/components/brand-icons"
 
 const PersistentFooter = () => {
   // Get current year dynamically

@@ -1,10 +1,11 @@
 "use client"
 
-import { memo, useState, useEffect } from "react"
+import { memo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Loader2, Share2, Linkedin, Twitter, Facebook, Link2, Shuffle } from "lucide-react"
+import { Loader2, Share2, Link2, Shuffle } from "lucide-react"
+import { Linkedin, Twitter, Facebook } from "@/components/brand-icons"
 import { shuffleArray } from "@/lib/utils"
 import { StructuredData } from "@/components/structured-data"
 
@@ -23,18 +24,10 @@ interface WorkProps {
 
 const WorkComponent = ({ data: initialData }: WorkProps) => {
   // State for the displayed work items
-  const [data, setData] = useState<WorkItem[]>([])
+  const [data, setData] = useState<WorkItem[]>(initialData)
   const [loading, setLoading] = useState(false)
-  const [selectedCard, setSelectedCard] = useState<string | null>(null)
+  const [selectedCard, setSelectedCard] = useState<string | null>(initialData[0]?.id ?? null)
   const [showShareMenu, setShowShareMenu] = useState<string | null>(null)
-
-  // Initialize with shuffled data on component mount
-  useEffect(() => {
-    setData(shuffleArray(initialData))
-    if (initialData.length > 0) {
-      setSelectedCard(initialData[0].id)
-    }
-  }, [initialData])
 
   // Reshuffle the current data
   const reshuffleData = () => {
