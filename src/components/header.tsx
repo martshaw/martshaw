@@ -11,7 +11,7 @@ type NavStyle = "gradient" | "background" | "shadow" | "fixed" | "dynamic"
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
-  const [navStyle, setNavStyle] = useState<NavStyle>("dynamic") // Default style
+  const [navStyle] = useState<NavStyle>("dynamic")
   const headerRef = useRef<HTMLElement>(null)
 
   // Get the current section's background color for dynamic styling

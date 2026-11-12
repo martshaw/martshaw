@@ -46,7 +46,7 @@ export default async function Home({
 
         <Suspense fallback={<LoadingSection />}>
           <section id="profile" className="min-h-screen">
-            <Profile data={profile} />
+            <Profile />
           </section>
         </Suspense>
 

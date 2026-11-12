@@ -1,5 +1,4 @@
 import { memo } from "react"
-import { Button } from "@/components/ui/button"
 
 interface Capability {
   id: string

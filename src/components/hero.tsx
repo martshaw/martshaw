@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react"
 const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
   const mouseRef = useRef({ x: 0, y: 0, radius: 150 })
   const particlesRef = useRef<Particle[]>([])
 

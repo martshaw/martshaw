@@ -2,16 +2,7 @@ import { memo } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-interface ProfileProps {
-  data: {
-    name: string
-    title: string
-    location: string
-    email: string
-  }
-}
-
-const ProfileComponent = ({ data }: ProfileProps) => {
+const ProfileComponent = () => {
   return (
     <section className="min-h-screen flex items-center bg-[#4a5d50] py-20 pb-24">
       <div className="container mx-auto px-4">

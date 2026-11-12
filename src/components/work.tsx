@@ -27,7 +27,6 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
   const [data, setData] = useState<WorkItem[]>([])
   const [loading, setLoading] = useState(false)
   const [selectedCard, setSelectedCard] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
   const [showShareMenu, setShowShareMenu] = useState<string | null>(null)
 
   // Initialize with shuffled data on component mount
@@ -110,7 +109,6 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
           </div>
         </div>
 
-        {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">{error}</div>}
 
         {/* Mobile: Grid View */}
         <div className="block md:hidden">
@@ -129,7 +127,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
                   <div className="relative aspect-[4/3] overflow-hidden mb-4 bg-gray-100">
                     <Link href={item.link}>
                       <Image
-                        src={item.image || "/placeholder.svg?height=600&width=800"}
+                        src={item.image}
                         alt={`${item.client} - ${item.title} project by Martin Shaw`}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
@@ -199,7 +197,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
         {/* Desktop: Card View */}
         <div className="hidden md:block">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500">
-            {data.map((item, index) => (
+            {data.map((item) => (
               <div
                 key={item.id}
                 className={`relative aspect-[3/4] overflow-hidden rounded-lg cursor-pointer transition-all duration-500 ${
@@ -209,7 +207,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
                 onMouseEnter={() => handleCardSelect(item.id)}
               >
                 <Image
-                  src={item.image || "/placeholder.svg?height=600&width=800"}
+                  src={item.image}
                   alt={`${item.client} - ${item.title} project by Martin Shaw`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"

@@ -6,12 +6,6 @@ import { CONTACT_EMAIL } from "./site"
 
 const contentDirectory = path.join(process.cwd(), "content")
 
-// Add this function at the top of the file
-async function fetchWithCache(url: string) {
-  return fetch(url, { cache: "force-cache" })
-}
-
-// Use React's cache to prevent redundant data fetching
 export const getProfileData = async () => {
   try {
     const filePath = path.join(contentDirectory, "profile.md")
@@ -45,7 +39,7 @@ export const getCapabilitiesData = async () => {
 
     const { data } = matter(fileContents)
 
-    return data.capabilities.map((capability: any, index: number) => ({
+    return data.capabilities.map((capability: { title: string; description: string }, index: number) => ({
       id: `capability-${index + 1}`,
       title: capability.title,
       description: capability.description,
@@ -63,7 +57,7 @@ export const getExperienceData = async () => {
 
     const { data } = matter(fileContents)
 
-    return data.experience.map((job: any, index: number) => ({
+    return data.experience.map((job: { company: string; position: string; period: string; description: string; website?: string }, index: number) => ({
       id: `job-${index + 1}`,
       company: job.company,
       position: job.position,
@@ -77,64 +71,32 @@ export const getExperienceData = async () => {
   }
 }
 
-// Unified function to get all work data from a single source
+type WorkProject = {
+  title: string
+  client: string
+  description: string
+  image: string
+  link: string
+}
+
 export const getAllWorkData = async () => {
   try {
-    const filePath = path.join(contentDirectory, "all-work.md")
+    const filePath = path.join(contentDirectory, "work.md")
+    const fileContents = await fs.readFile(filePath, "utf8")
+    const { data } = matter(fileContents)
 
-    // Try to read from the unified file first
-    try {
-      const fileContents = await fs.readFile(filePath, "utf8")
-      const { data } = matter(fileContents)
-
-      // Map and return the projects with unique IDs
-      return shuffleArray(
-        data.projects.map((project: any, index: number) => ({
-          id: `project-${index + 1}`,
-          title: project.title,
-          client: project.client,
-          description: project.description,
-          image: project.image,
-          link: project.link,
-        })),
-      )
-    } catch (fileError) {
-      // If the unified file doesn't exist yet, fall back to combining the two separate files
-      console.log("Unified work file not found, falling back to separate files")
-      return await getLegacyWorkData()
-    }
+    return shuffleArray(
+      (data.projects as WorkProject[]).map((project, index) => ({
+        id: `project-${index + 1}`,
+        title: project.title,
+        client: project.client,
+        description: project.description,
+        image: project.image,
+        link: project.link,
+      })),
+    )
   } catch (error) {
     console.error("Error fetching work data:", error)
     return []
   }
 }
-
-// Legacy function to combine data from separate files (for backward compatibility)
-const getLegacyWorkData = async () => {
-  try {
-    // Read from both files
-    const mainWorkPath = path.join(contentDirectory, "work.md")
-    const mainFileContents = await fs.readFile(mainWorkPath, "utf8")
-
-    const mainData = matter(mainFileContents).data
-    // Combine and map projects
-    const mainProjects = mainData.projects.map((project: any, index: number) => ({
-      id: `project-${index + 1}`,
-      title: project.title,
-      client: project.client,
-      description: project.description,
-      image: project.image,
-      link: project.link,
-    }))
-    // Combine and shuffle
-    return shuffleArray([...mainProjects])
-  } catch (error) {
-    console.error("Error in legacy work data fetching:", error)
-    return []
-  }
-}
-
-// For backward compatibility - will be deprecated
-export const getMainWorkData = getAllWorkData
-export const getMoreWorkData = async () => []
-export const getWorkData = getAllWorkData

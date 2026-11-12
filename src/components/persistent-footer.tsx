@@ -3,15 +3,11 @@
 import { memo } from "react"
 import Link from "next/link"
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/site"
-import { formatDate } from "@/lib/utils"
 import { Linkedin, Github, Mail } from "lucide-react"
 
 const PersistentFooter = () => {
   // Get current year dynamically
   const currentYear = new Date().getFullYear()
-
-  // Format today's date in British English format (DD/MM/YYYY)
-  const today = formatDate(new Date())
 
   return (
     <footer className="md:fixed relative bottom-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-sm border-t border-white/10 py-4">
