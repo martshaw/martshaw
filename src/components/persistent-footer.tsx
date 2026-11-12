@@ -3,7 +3,6 @@
 import { memo } from "react"
 import Link from "next/link"
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/site"
-import { formatDate } from "@/lib/utils"
 import { Linkedin, Github, Mail } from "lucide-react"
 
 const PersistentFooter = () => {
