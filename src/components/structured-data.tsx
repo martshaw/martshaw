@@ -1,4 +1,5 @@
 
+import { useId } from "react"
 import Script from "next/script"
 
 interface StructuredDataProps {
@@ -7,6 +8,7 @@ interface StructuredDataProps {
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
+  const id = useId()
   let structuredData = {}
 
   switch (type) {
@@ -69,7 +71,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
 
   return (
     <Script
-      id={`structured-data-${type.toLowerCase()}-${Math.random().toString(36).substring(2, 9)}`}
+      id={`structured-data-${type.toLowerCase()}-${id}`}
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
     />
