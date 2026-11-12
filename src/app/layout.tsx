@@ -7,7 +7,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Script from "next/script"
 import { PERSON_ID, SITE_URL } from "@/lib/site"
 
-export const experimental_ppr = true;
 // Optimize font loading
 const inter = Inter({
   subsets: ["latin"],

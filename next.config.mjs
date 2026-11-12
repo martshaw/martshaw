@@ -23,7 +23,6 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
-    ppr: 'incremental',
   },
   poweredByHeader: false,
   reactStrictMode: true,
