@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, memo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { CONTACT_MAILTO } from "@/lib/site"
 
 // Define the navigation style options
 type NavStyle = "gradient" | "background" | "shadow" | "fixed" | "dynamic"
@@ -195,7 +196,7 @@ const Header = () => {
             )}
             asChild
           >
-            <a href="mailto:info@martinshaw.com?subject=martshaw.com:Hey%20(👋)"><span className="mr-1">👋</span> Say Hello</a>
+            <a href={CONTACT_MAILTO}><span className="mr-1">👋</span> Say Hello</a>
           </Button>
         </nav>
       </div>

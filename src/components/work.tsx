@@ -8,6 +8,7 @@ import { Loader2, Share2, Link2, Shuffle } from "lucide-react"
 import { Linkedin, Twitter, Facebook } from "@/components/brand-icons"
 import { shuffleArray } from "@/lib/utils"
 import { StructuredData } from "@/components/structured-data"
+import { PERSON_ID, SITE_URL } from "@/lib/site"
 
 interface WorkItem {
   id: string
@@ -53,7 +54,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
   // Share project
   const shareProject = (platform: string, item: WorkItem) => {
     const projectTitle = `${item.client} - ${item.title} | Martin Shaw Portfolio`
-    const projectUrl = item.link !== "#" ? item.link : "https://martinshaw.com"
+    const projectUrl = item.link !== "#" ? item.link : SITE_URL
     const description = item.description
 
     let shareUrl = ""
@@ -281,11 +282,7 @@ const WorkComponent = ({ data: initialData }: WorkProps) => {
             description: project.description,
             url: project.link,
             image: project.image,
-            creator: {
-              "@type": "Person",
-              name: "Martin Shaw",
-              url: "https://martinshaw.com",
-            },
+            creator: { "@id": PERSON_ID },
             datePublished: new Date().toISOString().split("T")[0], // Current date in YYYY-MM-DD format
             provider: {
               "@type": "Organization",
